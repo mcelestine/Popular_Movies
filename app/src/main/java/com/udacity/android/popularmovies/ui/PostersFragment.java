@@ -47,7 +47,6 @@ public class PostersFragment extends Fragment {
     private static final String EXTRA_MOVIE_OBJECT = "movie";
 
     private MovieAdapter mMovieAdapter;
-//    private MovieResults movieResults;
     private ArrayList<String> mPosterPaths;
     private ArrayList<Movie> mMovies;
 
@@ -125,24 +124,18 @@ public class PostersFragment extends Fragment {
         mMovieAdapter = new MovieAdapter(getActivity());
         gridView.setAdapter(mMovieAdapter);
 
-        //movieResults = MovieResults.getInstance(getActivity());
-//        movieResults = MovieResults.getInstance(getActivity());
-
         TextView emptyTextView = (TextView) rootView.findViewById(android.R.id.empty);
         gridView.setEmptyView(emptyTextView);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String posterUrl = mMovieAdapter.getItem(position);
+
                 Movie movie = MovieResults.getInstance(getActivity()).getMovie(position);
 
-//                Intent intent = new Intent(getActivity(), DetailActivity.class)
-//                        .putExtra(Intent.EXTRA_TEXT, posterUrl);
                 Intent intent = new Intent(getActivity(), DetailActivity.class)
                         .putExtra(EXTRA_MOVIE_OBJECT, movie);
                 startActivity(intent);
-
             }
         });
 
@@ -247,7 +240,6 @@ public class PostersFragment extends Fragment {
             return null;
         }
 
-//        private ArrayList<String> getMovieDataFromJSON(String moviesJsonStr)
         private ArrayList<String> getMovieDataFromJSON(String moviesJsonStr)
                 throws JSONException {
 
@@ -268,7 +260,6 @@ public class PostersFragment extends Fragment {
 
             // Parse array to gather poster urls and other data for each movie
             mPosterPaths = new ArrayList<>();
-           // mMovies = MovieResults.getInstance(getActivity()).getMovies();
             mMovies = new ArrayList<>();
 
             for (int i = 0; i < moviesResultsArray.length(); i++) {
@@ -276,21 +267,18 @@ public class PostersFragment extends Fragment {
                 JSONObject jsonMovie = moviesResultsArray.getJSONObject(i);
                 // Create a Movie object
                 Movie movie = new Movie();
-                movie.setId(jsonMovie.getString(MOVIE_ID));
+                movie.setId(jsonMovie.getInt(MOVIE_ID));
                 movie.setOriginalTitle(jsonMovie.getString(MOVIE_ORIGINAL_TITLE));
                 movie.setSynopsis(jsonMovie.getString(MOVIE_SYNOPSIS));
                 movie.setUserRating(jsonMovie.getDouble(MOVIE_RATING));
                 movie.setReleaseDate(jsonMovie.getString(MOVIE_RELEASE_DATE));
                 movie.setPosterPath(BASE_POSTER_PATH + POSTER_SIZE + jsonMovie.getString(MOVIE_POSTER_PATH));
 
-                //movieResults.addMovie(movie);
-                //MovieResults.getInstance(getActivity()).addMovie(movie);
                 mMovies.add(movie);
                 // Get the poster path for this movie and add it to our list of movie poster urls
                 // TODO: Check if there's a better way to add/create these strings. Instead of concatenation.
                 mPosterPaths.add(BASE_POSTER_PATH + POSTER_SIZE + jsonMovie.getString(MOVIE_POSTER_PATH));
             }
-            //return movieResults.getMovies();
             return mPosterPaths;
         }
 
