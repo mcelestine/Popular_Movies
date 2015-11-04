@@ -175,7 +175,7 @@ public class PostersFragment extends Fragment {
 
                 Uri builtUri = Uri.parse(MOVIES_BASE_URL).buildUpon()
                         .appendQueryParameter(QUERY_PARAM, ORDER_OPTION_PARAM)
-                        .appendQueryParameter(API_KEY, "4ee9982eaf1fc27a602da4936c07cc36")
+                        .appendQueryParameter(API_KEY, "enter_your_tvmd_api_key_here")
                         .build();
 
                 URL url = new URL(builtUri.toString());
